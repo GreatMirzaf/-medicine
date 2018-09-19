@@ -8,6 +8,7 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="227,131,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
+        <Button Content="201 SOSET HUI&#xD;&#xA;" HorizontalAlignment="Left" Margin="457,97,0,0" VerticalAlignment="Top" Width="175" Height="125" Click="Button_Click_1"/>
 
     </Grid>
 </Window>
