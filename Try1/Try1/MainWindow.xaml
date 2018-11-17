@@ -6,5 +6,9 @@
         xmlns:local="clr-namespace:Try1"
         mc:Ignorable="d"
         Title="MainWindow" Height="730" Width="1060">
-    <Grid/>
+    <Grid>
+        <TextBlock HorizontalAlignment="Left" Margin="269,198,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
+        <TextBlock HorizontalAlignment="Left" Margin="269,198,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
+        <TextBlock HorizontalAlignment="Left" Margin="622,185,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
+    </Grid>
 </Window>
