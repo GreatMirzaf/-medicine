@@ -7,10 +7,37 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="730" Width="1060">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="754,433,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
-        <TextBlock HorizontalAlignment="Left" Margin="140,473,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
-        <TextBlock HorizontalAlignment="Left" Margin="622,185,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
-        <Label Content="Label" HorizontalAlignment="Left" Margin="359,375,0,0" VerticalAlignment="Top" Height="150" Width="240"/>
-        <Button Content="YA APY VISHE GOR I EBASHU DRAM AND BASSEE&#xD;&#xA;" HorizontalAlignment="Left" Margin="300,510,0,0" VerticalAlignment="Top" Width="401" Height="108" Click="Button_Click_2"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="659" Margin="390,30,0,0" VerticalAlignment="Top" Width="652" Grid.ColumnSpan="2"/>
+        <Menu Height="25" VerticalAlignment="Top" Grid.ColumnSpan="2">
+            <MenuItem Header="File">
+                <MenuItem Header="New Project" />
+                <MenuItem Header="Open Project" >
+                    <MenuItem Header="WinForms"/>
+                    <MenuItem Header="WPF" />
+                </MenuItem>
+                <Separator />
+                <MenuItem Header="Exit" />
+            </MenuItem>
+            <MenuItem Header="Edit" />
+            <MenuItem Header="View" />
+        </Menu>
+        <TextBlock HorizontalAlignment="Left" Margin="390,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="659" Width="652" Grid.ColumnSpan="2"/>
+        <TabControl HorizontalAlignment="Left" Height="664" Margin="10,25,0,0" VerticalAlignment="Top" Width="375" Grid.ColumnSpan="2">
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5">
+                    <TreeView HorizontalAlignment="Left" Height="616" Margin="10,10,0,0" VerticalAlignment="Top" Width="349"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="TabItem">
+                <Grid Background="#FFE5E5E5" Margin="0,3,0,-3">
+                    <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302" TextChanged="TextBox_TextChanged_1"/>
+                    <Button Content="Search" HorizontalAlignment="Left" Height="23" Margin="317,10,0,0" VerticalAlignment="Top" Width="42"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
