@@ -7,8 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="730" Width="1060">
     <Grid>
-        <TextBlock HorizontalAlignment="Left" Margin="269,198,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
-        <TextBlock HorizontalAlignment="Left" Margin="269,198,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
+        <TextBlock HorizontalAlignment="Left" Margin="754,433,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
+        <TextBlock HorizontalAlignment="Left" Margin="140,473,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
         <TextBlock HorizontalAlignment="Left" Margin="622,185,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="137" Width="214"/>
+        <Label Content="Label" HorizontalAlignment="Left" Margin="359,375,0,0" VerticalAlignment="Top" Height="150" Width="240"/>
+        <Button Content="YA APY VISHE GOR I EBASHU DRAM AND BASSEE&#xD;&#xA;" HorizontalAlignment="Left" Margin="300,510,0,0" VerticalAlignment="Top" Width="401" Height="108" Click="Button_Click_2"/>
     </Grid>
 </Window>
