@@ -5,14 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Try1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="730" Width="1060">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="0*"/>
-            <ColumnDefinition/>
-        </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="639" Margin="390,50,0,0" VerticalAlignment="Top" Width="652" Grid.ColumnSpan="2"/>
-        <Menu Height="25" VerticalAlignment="Top" Grid.ColumnSpan="2">
+        Title="MainWindow" Height="739" Width="1063" Loaded="Window_Loaded" Closing="Window_Closing">
+    <Grid Background="Black" >
+
+        <Menu Height="25" VerticalAlignment="Top" Grid.ColumnSpan="3" Background="Black" Foreground="#FF198B00">
             <MenuItem Header="File">
                 <MenuItem Header="Открыть базу данных" >
                 </MenuItem>
@@ -24,28 +20,45 @@
             <MenuItem Header="Edit" />
             <MenuItem Header="View" />
         </Menu>
-        <ScrollViewer HorizontalAlignment="Left" Margin="390,50,0,0" VerticalAlignment="Top" Height="639" Width="652" Grid.ColumnSpan="2">
-            <TextBlock TextWrapping="Wrap" Height="639" Width="652"/>
-        </ScrollViewer>
-        <TabControl HorizontalAlignment="Left" Height="664" Margin="10,25,0,0" VerticalAlignment="Top" Width="375" Grid.ColumnSpan="2">
-            <TabItem Header="ATX" Margin="-2,0,-18,0">
-                <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="77*"/>
-                        <ColumnDefinition Width="292*"/>
-                    </Grid.ColumnDefinitions>
+
+        <TabControl HorizontalAlignment="Left" Height="669" Margin="10,25,0,0" VerticalAlignment="Top" Width="375" Grid.ColumnSpan="3" Background="#FF198B00" BorderBrush="Black">
+            <TabItem Header="ATX" Margin="-2,0,-18,0" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black">
+                <Grid Background="Black">
                     <TreeView HorizontalAlignment="Left" Height="616" Margin="10,10,0,0" VerticalAlignment="Top" Width="349" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Поиск" Margin="28,0,-42,0" Height="22" VerticalAlignment="Bottom">
-                <Grid Background="#FFE5E5E5" Margin="0,3,0,-3">
-                    <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302" TextChanged="TextBox_TextChanged_1"/>
-                    <Button Content="Поиск" HorizontalAlignment="Left" Height="23" Margin="317,10,0,0" VerticalAlignment="Top" Width="42"/>
+            <TabItem Header="Поиск" Margin="20,0,-34,0" Height="22" VerticalAlignment="Bottom" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black">
+                <Grid Background="Black">
+                    <TextBox x:Name="findBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302" Background="White" BorderBrush="#FF198B00" />
+                    <Button x:Name="BtnFind" Content="Поиск" HorizontalAlignment="Left" Height="23" Margin="317,10,0,0" VerticalAlignment="Top" Width="42" Click="BtnFind_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Добавить" Margin="36,0,-37,0"  Height="22" VerticalAlignment="Bottom" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black">
+                <Grid Background="Black" Margin="0,0,0,1">
+                    <TextBox x:Name="addBox1" HorizontalAlignment="Left" Height="23" Margin="155,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" />
+                    <Button x:Name="BtnAdd" Content="Добавить" HorizontalAlignment="Left" Height="22" Margin="271,612,0,0" VerticalAlignment="Top" Width="88" Click="BtnAdd_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00"/>
+                    <Label Content="Название препарата: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="23" Width="140" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="addBox2" HorizontalAlignment="Left" Height="23" Margin="155,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" />
+                    <Label Content="Цена на препарат: " HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Height="23" Width="140" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="addBox3" HorizontalAlignment="Left" Height="23" Margin="155,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" />
+                    <Label Content="Класс препарата: " HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Height="23" Width="140" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="addBox4" HorizontalAlignment="Left" Height="23" Margin="155,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" />
+                    <Label Content="Подкласс препарата: " HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Height="23" Width="140" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="addBox5" HorizontalAlignment="Left" Height="23" Margin="155,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" />
+                    <Label Content="Кол-во препарата: " HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Height="23" Width="140" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="addBox6" HorizontalAlignment="Left" Height="23" Margin="10,178,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="349" Grid.ColumnSpan="2" BorderBrush="#FF198B00" />
+                    <Label Content="Введите название файла и информацию о препарате:" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Height="23" Width="349" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="addBox7" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="360" Margin="10,212,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="349" BorderBrush="#FF198B00" AcceptsReturn="True" AcceptsTab="True" UndoLimit="97" />
+                    <Button x:Name="BtnCancel" Content="Сброс" HorizontalAlignment="Left" Height="22" Margin="10,612,0,0" VerticalAlignment="Top" Width="88" Click="BtnCancel_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00"/>
+                    <Label Visibility="Hidden" x:Name="lErr" Content="Label" HorizontalAlignment="Left" Margin="10,581,0,0" VerticalAlignment="Top" Width="349" Foreground="Red"/>
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button Grid.ColumnSpan="2" Content="Добавить товар" HorizontalAlignment="Left" Margin="390,25,0,0" VerticalAlignment="Top" Width="100"/>
-        <Button Grid.ColumnSpan="2" Content="Изменить" HorizontalAlignment="Left" Margin="510,25,0,0" VerticalAlignment="Top" Width="75"/>
-        <Button Grid.ColumnSpan="2" Content="Продать" HorizontalAlignment="Left" Margin="610,25,0,0" VerticalAlignment="Top" Width="75"/>
+
+        <Button x:Name="BtnChange" Content="Изменить" HorizontalAlignment="Left" Margin="696,609,0,0" VerticalAlignment="Top" Width="110" Click="BtnChange_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00" Height="40"/>
+        <Button x:Name="BtnSell" Content="Продать" HorizontalAlignment="Left" Margin="696,654,0,0" VerticalAlignment="Top" Width="110" Click="BtnSell_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00" Height="40"/>
+        <TextBox x:Name="textBlock1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="473" Margin="390,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="416" BorderBrush="#FF198B00" SelectionBrush="#FF198B00" AcceptsReturn="True" AcceptsTab="True" IsReadOnly="True"/>
+        <TextBox x:Name="textBlock2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="180" Margin="390,514,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="301"/>
+
     </Grid>
 </Window>
