@@ -11,33 +11,41 @@
             <ColumnDefinition Width="0*"/>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="659" Margin="390,30,0,0" VerticalAlignment="Top" Width="652" Grid.ColumnSpan="2"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="639" Margin="390,50,0,0" VerticalAlignment="Top" Width="652" Grid.ColumnSpan="2"/>
         <Menu Height="25" VerticalAlignment="Top" Grid.ColumnSpan="2">
             <MenuItem Header="File">
-                <MenuItem Header="New Project" />
-                <MenuItem Header="Open Project" >
-                    <MenuItem Header="WinForms"/>
-                    <MenuItem Header="WPF" />
+                <MenuItem Header="Открыть базу данных" >
+                </MenuItem>
+                <MenuItem Header="Обновить" >
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="Exit" />
+                <MenuItem Header="Выход" />
             </MenuItem>
             <MenuItem Header="Edit" />
             <MenuItem Header="View" />
         </Menu>
-        <TextBlock HorizontalAlignment="Left" Margin="390,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="659" Width="652" Grid.ColumnSpan="2"/>
+        <ScrollViewer HorizontalAlignment="Left" Margin="390,50,0,0" VerticalAlignment="Top" Height="639" Width="652" Grid.ColumnSpan="2">
+            <TextBlock TextWrapping="Wrap" Height="639" Width="652"/>
+        </ScrollViewer>
         <TabControl HorizontalAlignment="Left" Height="664" Margin="10,25,0,0" VerticalAlignment="Top" Width="375" Grid.ColumnSpan="2">
-            <TabItem Header="TabItem">
+            <TabItem Header="ATX" Margin="-2,0,-18,0">
                 <Grid Background="#FFE5E5E5">
-                    <TreeView HorizontalAlignment="Left" Height="616" Margin="10,10,0,0" VerticalAlignment="Top" Width="349"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="77*"/>
+                        <ColumnDefinition Width="292*"/>
+                    </Grid.ColumnDefinitions>
+                    <TreeView HorizontalAlignment="Left" Height="616" Margin="10,10,0,0" VerticalAlignment="Top" Width="349" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="TabItem">
+            <TabItem Header="Поиск" Margin="28,0,-42,0" Height="22" VerticalAlignment="Bottom">
                 <Grid Background="#FFE5E5E5" Margin="0,3,0,-3">
                     <TextBox HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302" TextChanged="TextBox_TextChanged_1"/>
-                    <Button Content="Search" HorizontalAlignment="Left" Height="23" Margin="317,10,0,0" VerticalAlignment="Top" Width="42"/>
+                    <Button Content="Поиск" HorizontalAlignment="Left" Height="23" Margin="317,10,0,0" VerticalAlignment="Top" Width="42"/>
                 </Grid>
             </TabItem>
         </TabControl>
+        <Button Grid.ColumnSpan="2" Content="Добавить товар" HorizontalAlignment="Left" Margin="390,25,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button Grid.ColumnSpan="2" Content="Изменить" HorizontalAlignment="Left" Margin="510,25,0,0" VerticalAlignment="Top" Width="75"/>
+        <Button Grid.ColumnSpan="2" Content="Продать" HorizontalAlignment="Left" Margin="610,25,0,0" VerticalAlignment="Top" Width="75"/>
     </Grid>
 </Window>
