@@ -22,43 +22,74 @@
         </Menu>
 
         <TabControl HorizontalAlignment="Left" Height="669" Margin="10,25,0,0" VerticalAlignment="Top" Width="375" Grid.ColumnSpan="3" Background="#FF198B00" BorderBrush="Black">
-            <TabItem Header="ATX" Margin="-2,0,-18,0" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black">
+            <TabItem Header="ATX" Margin="-2,0,-18,0" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black" FontSize="14">
                 <Grid Background="Black">
                     <TreeView HorizontalAlignment="Left" Height="616" Margin="10,10,0,0" VerticalAlignment="Top" Width="349" Grid.ColumnSpan="2"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Поиск" Margin="20,0,-34,0" Height="22" VerticalAlignment="Bottom" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black">
+            <TabItem Header="Поиск" Margin="20,0,-34,0" Height="22" VerticalAlignment="Bottom" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black" FontSize="14">
                 <Grid Background="Black">
-                    <TextBox x:Name="findBox" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="302" Background="White" BorderBrush="#FF198B00" />
-                    <Button x:Name="BtnFind" Content="Поиск" HorizontalAlignment="Left" Height="23" Margin="317,10,0,0" VerticalAlignment="Top" Width="42" Click="BtnFind_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00"/>
+                    <TextBox x:Name="findBox" HorizontalAlignment="Left" Height="30" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="268" Background="White" BorderBrush="#FF198B00" />
+                    <Button x:Name="BtnFind" Content="Поиск" HorizontalAlignment="Left" Height="30" Margin="283,33,0,0" VerticalAlignment="Top" Width="76" Click="BtnFind_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00" FontSize="14"/>
+                    <Label Content="Введите название препарата:" HorizontalAlignment="Left" Margin="10,4,0,0" VerticalAlignment="Top" Width="268" FontSize="14" Foreground="#FF198B00"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Добавить" Margin="36,0,-37,0"  Height="22" VerticalAlignment="Bottom" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black">
+            <TabItem Header="Добавить" Margin="36,0,-36,0"  Height="22" VerticalAlignment="Bottom" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black" FontSize="14">
                 <Grid Background="Black" Margin="0,0,0,1">
-                    <TextBox x:Name="addBox1" HorizontalAlignment="Left" Height="23" Margin="155,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" />
-                    <Button x:Name="BtnAdd" Content="Добавить" HorizontalAlignment="Left" Height="22" Margin="271,612,0,0" VerticalAlignment="Top" Width="88" Click="BtnAdd_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00"/>
-                    <Label Content="Название препарата: " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Height="23" Width="140" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
-                    <TextBox x:Name="addBox2" HorizontalAlignment="Left" Height="23" Margin="155,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" />
-                    <Label Content="Цена на препарат: " HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Height="23" Width="140" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
-                    <TextBox x:Name="addBox3" HorizontalAlignment="Left" Height="23" Margin="155,66,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" />
-                    <Label Content="Класс препарата: " HorizontalAlignment="Left" Margin="10,66,0,0" VerticalAlignment="Top" Height="23" Width="140" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
-                    <TextBox x:Name="addBox4" HorizontalAlignment="Left" Height="23" Margin="155,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" />
-                    <Label Content="Подкласс препарата: " HorizontalAlignment="Left" Margin="10,94,0,0" VerticalAlignment="Top" Height="23" Width="140" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
-                    <TextBox x:Name="addBox5" HorizontalAlignment="Left" Height="23" Margin="155,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" />
-                    <Label Content="Кол-во препарата: " HorizontalAlignment="Left" Margin="10,122,0,0" VerticalAlignment="Top" Height="23" Width="140" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
-                    <TextBox x:Name="addBox6" HorizontalAlignment="Left" Height="23" Margin="10,178,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="349" Grid.ColumnSpan="2" BorderBrush="#FF198B00" />
-                    <Label Content="Введите название файла и информацию о препарате:" HorizontalAlignment="Left" Margin="10,155,0,0" VerticalAlignment="Top" Height="23" Width="349" Foreground="#FF198B00" FontSize="10" Grid.ColumnSpan="2"/>
-                    <TextBox x:Name="addBox7" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="360" Margin="10,212,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="349" BorderBrush="#FF198B00" AcceptsReturn="True" AcceptsTab="True" UndoLimit="97" />
-                    <Button x:Name="BtnCancel" Content="Сброс" HorizontalAlignment="Left" Height="22" Margin="10,612,0,0" VerticalAlignment="Top" Width="88" Click="BtnCancel_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00"/>
-                    <Label Visibility="Hidden" x:Name="lErr" Content="Label" HorizontalAlignment="Left" Margin="10,581,0,0" VerticalAlignment="Top" Width="349" Foreground="Red"/>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="207*"/>
+                        <ColumnDefinition Width="163*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="addBox1" HorizontalAlignment="Left" Height="28" Margin="155,11,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" Grid.ColumnSpan="2" />
+                    <Button x:Name="BtnAdd" Content="Добавить" HorizontalAlignment="Left" Height="30" Margin="64.5,604,0,0" VerticalAlignment="Top" Width="88" Click="BtnAdd_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00" FontSize="14" Grid.Column="1"/>
+                    <Label Content="Название препарата: " HorizontalAlignment="Left" VerticalAlignment="Top" Height="33" Width="150" Foreground="#FF198B00" FontSize="14" Margin="0,10,0,0"/>
+                    <TextBox x:Name="addBox2" HorizontalAlignment="Left" Height="28" Margin="155,44,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" Grid.ColumnSpan="2" />
+                    <Label Content="Цена на препарат: " HorizontalAlignment="Left" Margin="0,44,0,0" VerticalAlignment="Top" Height="28" Width="150" Foreground="#FF198B00" FontSize="14"/>
+                    <TextBox x:Name="addBox3" HorizontalAlignment="Left" Height="28" Margin="155,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" Grid.ColumnSpan="2" />
+                    <Label Content="Класс препарата: " HorizontalAlignment="Left" Margin="0,77,0,0" VerticalAlignment="Top" Height="28" Width="150" Foreground="#FF198B00" FontSize="14"/>
+                    <TextBox x:Name="addBox4" HorizontalAlignment="Left" Height="28" Margin="155,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" Grid.ColumnSpan="2" />
+                    <Label Content="Подкласс препарата: " HorizontalAlignment="Left" Margin="0,110,0,0" VerticalAlignment="Top" Height="28" Width="150" Foreground="#FF198B00" FontSize="14"/>
+                    <TextBox x:Name="addBox5" HorizontalAlignment="Left" Height="28" Margin="155,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" BorderBrush="#FF198B00" Grid.ColumnSpan="2" />
+                    <Label Content="Кол-во препарата: " HorizontalAlignment="Left" Margin="0,143,0,0" VerticalAlignment="Top" Height="28" Width="150" Foreground="#FF198B00" FontSize="14"/>
+                    <TextBox x:Name="addBox6" HorizontalAlignment="Left" Height="23" Margin="10,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="349" BorderBrush="#FF198B00" Grid.ColumnSpan="2" />
+                    <Label Content="Введите название файла и информацию о препарате:" HorizontalAlignment="Left" Margin="0,176,0,0" VerticalAlignment="Top" Height="28" Width="359" Foreground="#FF198B00" FontSize="14" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="addBox7" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="360" Margin="10,239,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="349" BorderBrush="#FF198B00" AcceptsReturn="True" AcceptsTab="True" UndoLimit="97" Grid.ColumnSpan="2" />
+                    <Button x:Name="BtnCancel" Content="Сброс" HorizontalAlignment="Left" Height="27" Margin="10,607,0,0" VerticalAlignment="Top" Width="88" Click="BtnCancel_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00" FontSize="14"/>
+                    <Label Visibility="Hidden" x:Name="lErr" Content="Label" HorizontalAlignment="Left" Margin="10,581,0,0" VerticalAlignment="Top" Width="349" Foreground="Red" Grid.ColumnSpan="2"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Изменить" Margin="39,0,-42,0"  Height="22" VerticalAlignment="Bottom" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black" FontSize="14">
+                <Grid Background="Black" Margin="0,0,0,1">
+
+
+                    <TextBox x:Name="addBox1_" HorizontalAlignment="Left" Height="30" Margin="161,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" BorderBrush="#FF198B00" />
+                    <Button x:Name="BtnChange" Content="Изменить" Height="30" HorizontalAlignment="Left" Margin="214,236,0,0" VerticalAlignment="Top" Width="88" Click="BtnChange_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00"/>
+
+                    <Label Content="Название препарата: " HorizontalAlignment="Left" Margin="10,70,0,0" VerticalAlignment="Top" Height="30" Width="146" Foreground="#FF198B00" FontSize="14"/>
+                    <TextBox x:Name="addBox2_" HorizontalAlignment="Left" Height="28" Margin="161,105,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" BorderBrush="#FF198B00" />
+                    <Label Content="Цена на препарат: " HorizontalAlignment="Left" Margin="10,105,0,0" VerticalAlignment="Top" Height="28" Width="140" Foreground="#FF198B00" FontSize="14"/>
+                    <TextBox x:Name="addBox5_" HorizontalAlignment="Left" Height="28" Margin="161,138,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="198" BorderBrush="#FF198B00" />
+                    <Label Content="Кол-во препарата: " HorizontalAlignment="Left" Margin="10,138,0,0" VerticalAlignment="Top" Height="28" Width="151" Foreground="#FF198B00" FontSize="14"/>
+                    <Button x:Name="BtnCancel_" Content="Сброс" HorizontalAlignment="Left" Height="30" Margin="62,236,0,0" VerticalAlignment="Top" Width="88" Click="BtnCancel_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00"/>
+                    <Label Visibility="Hidden" x:Name="lErr_" Content="Kuku" HorizontalAlignment="Left" Margin="10,572,0,0" VerticalAlignment="Top" Width="349" Height="31" Foreground="Red" Grid.ColumnSpan="2"/>
+                    <ComboBox x:Name="comboMedName" HorizontalAlignment="Left" Margin="161,17,0,0" VerticalAlignment="Top" Width="198" Height="32" BorderBrush="#FF198B00" Background="White" Loaded="ComboMedName_Loaded" SelectionChanged="ComboBox_SelectionChanged" />
+                    <Label Content="Препарат: " HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top" Height="32" Width="140" Foreground="#FF198B00" FontSize="14"/>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Удалить" Margin="44,0,-47,0"  Height="22" VerticalAlignment="Bottom" BorderBrush="#FF198B00" Foreground="#FF198B00" Background="Black" FontSize="14">
+                <Grid Background="Black" Margin="0,0,0,1">
+                    <ComboBox x:Name="comboDel" HorizontalAlignment="Left" Margin="155,17,0,0" VerticalAlignment="Top" Width="204" Height="35" BorderBrush="#FF198B00" FontSize="14" Background="White" Loaded="ComboDel_Loaded"/>
+                    <Label Content="Препарат: " HorizontalAlignment="Left" Margin="10,17,0,0" VerticalAlignment="Top" Height="35" Width="140" Foreground="#FF198B00" FontSize="14"/>
+                    <Button x:Name="BtnDel" Content="Удалить" HorizontalAlignment="Left" Margin="116,84,0,0" VerticalAlignment="Top" Width="110" Click="BtnDel_Click" FontSize="14" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00" Height="40"/>
                 </Grid>
             </TabItem>
         </TabControl>
 
-        <Button x:Name="BtnChange" Content="Изменить" HorizontalAlignment="Left" Margin="696,609,0,0" VerticalAlignment="Top" Width="110" Click="BtnChange_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00" Height="40"/>
-        <Button x:Name="BtnSell" Content="Продать" HorizontalAlignment="Left" Margin="696,654,0,0" VerticalAlignment="Top" Width="110" Click="BtnSell_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00" Height="40"/>
-        <TextBox x:Name="textBlock1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="473" Margin="390,25,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="416" BorderBrush="#FF198B00" SelectionBrush="#FF198B00" AcceptsReturn="True" AcceptsTab="True" IsReadOnly="True"/>
-        <TextBox x:Name="textBlock2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="180" Margin="390,514,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="301"/>
+
+        <Button x:Name="BtnSell" Content="Продать" HorizontalAlignment="Left" Margin="629,654,0,0" VerticalAlignment="Top" Width="110" Click="BtnSell_Click" Background="Black" BorderBrush="#FF198B00" Foreground="#FF198B00" Height="40" FontSize="14"/>
+        <TextBox x:Name="textBlock1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="473" Margin="629,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="416" BorderBrush="#FF198B00" SelectionBrush="#FF198B00" AcceptsReturn="True" AcceptsTab="True" IsReadOnly="True"/>
+        <TextBox x:Name="textBlock2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Left" Height="180" Margin="744,514,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="301"/>
 
     </Grid>
 </Window>
