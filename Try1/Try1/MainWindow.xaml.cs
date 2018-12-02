@@ -31,8 +31,10 @@ namespace Try1
 
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            string dir = Environment.CurrentDirectory.ToString();
+            
             string connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = D:\Archive\Project\Могилянка\С#\git\-medicine\Try1\Try1\Database1.mdf;Integrated Security=True";
-
+            //string connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename \Database1.mdf;Integrated Security=True";
             sqlConnection = new SqlConnection(connectionString);
 
             await sqlConnection.OpenAsync();
@@ -136,7 +138,75 @@ namespace Try1
 
         private async void BtnSell_Click(object sender, RoutedEventArgs e)
         {
-                       
+            int q = 0;
+            SqlDataReader sqlReader = null;
+            SqlCommand command = new SqlCommand("SELECT [Quantity] FROM [Table] WHERE [Name] LIKE N'" + nameLb.Content.ToString() + "'", sqlConnection);
+
+            try
+            {
+                if (!string.IsNullOrEmpty(sellBox.Text) && !string.IsNullOrWhiteSpace(sellBox.Text))
+                {
+                    sqlReader = await command.ExecuteReaderAsync();
+                    while (await sqlReader.ReadAsync())
+                    {
+                        if(Convert.ToInt32(sellBox.Text)<= Convert.ToInt32(sqlReader["Quantity"]))
+                        {
+                            q = Convert.ToInt32(sqlReader["Quantity"]) - Convert.ToInt32(sellBox.Text);
+                        }
+                        else
+                        {
+                            q = Convert.ToInt32(sqlReader["Quantity"]);
+                            MessageBox.Show("Введенное кол-во продаваемого препарата превышает максимальное кол-во препарата в наличии!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+
+                    SqlCommand command2 = new SqlCommand("UPDATE [Table] SET [Quantity]=@Quantity WHERE [Name]=N'" + nameLb.Content.ToString() + "'", sqlConnection);
+                    command2.Parameters.AddWithValue("Quantity", q);
+
+                    //qunLb.Content = Convert.ToString(sqlReader["Quantity"]);
+                    if (sqlReader != null)
+                    sqlReader.Close();
+
+                    await command2.ExecuteNonQueryAsync();
+
+                    sellBox.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("Введите кол-во продаваемого препарата!", "Требуется заполнить поле", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+                
+            }
+
+            SqlCommand command3 = new SqlCommand("SELECT * FROM [Table] WHERE [Name] LIKE N'" + findBox.Text + "'", sqlConnection);
+            try
+            {
+                sqlReader = await command.ExecuteReaderAsync();
+
+                while (await sqlReader.ReadAsync())
+                {
+                    qunLb.Content = Convert.ToString(sqlReader["Quantity"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+            }
+
         }
 
         private async void BtnFind_Click(object sender, RoutedEventArgs e)
@@ -154,7 +224,11 @@ namespace Try1
                     string s = System.IO.File.ReadAllText(Convert.ToString(sqlReader["Info"]) + ".txt", Encoding.Default).Replace("\n", " ");
 
                     textBlock1.Text = s;
-                    textBlock2.Text = "Id: " + Convert.ToString(sqlReader["Id"]) + "\nЦена: " + Convert.ToString(sqlReader["Price"]) + " грн.\nКласс: " + Convert.ToString(sqlReader["Class"]) + "\nПодкласс: " + Convert.ToString(sqlReader["Subclass"]) + "\nКол-во на складе: " + Convert.ToString(sqlReader["Quantity"]);
+                    nameLb.Content = Convert.ToString(sqlReader["Name"]);
+                    priceLb.Content = Convert.ToString(sqlReader["Price"]);
+                    classLb.Content = Convert.ToString(sqlReader["Class"]);
+                    sbLb.Content = Convert.ToString(sqlReader["Subclass"]);
+                    qunLb.Content = Convert.ToString(sqlReader["Quantity"]);
                     //
                 }
             }
@@ -295,6 +369,11 @@ namespace Try1
             {
                 MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
             }*/
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
