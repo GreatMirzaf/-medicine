@@ -34,8 +34,13 @@ namespace Try1
         
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string connectionString = @"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=D:\Программы\Git\-medicine\Try1\Try1\Database1.mdf;Integrated Security=True";
+            //////HEAD
+            string connectionString =
+                    string.Format(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={0};Integrated Security=True",
+                        Path.GetFullPath("Database1.mdf"));
 
+            //string connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename \Database1.mdf;Integrated Security=True";
+            //////////////a1789e93be27de4f96ad4055e6d5f6715dd0b3a8
             sqlConnection = new SqlConnection(connectionString);
 
             await sqlConnection.OpenAsync();
@@ -63,11 +68,13 @@ namespace Try1
                 command.Parameters.AddWithValue("Class", addBox3.Text);
                 command.Parameters.AddWithValue("Subclass", addBox4.Text);
                 command.Parameters.AddWithValue("Quantity", addBox5.Text);
+
                 command.Parameters.AddWithValue("Info", addBox6.Text);
 
                 //command.Parameters.AddWithValue("Name", addBox7.Text);
+                
                 string lines = addBox7.Text;
-                System.IO.File.WriteAllText(@addBox6.Text + ".txt", lines);
+                System.IO.File.WriteAllText(addBox6.Text + ".txt", lines, Encoding.UTF8);
 
 
                 await command.ExecuteNonQueryAsync();
@@ -89,13 +96,120 @@ namespace Try1
 
         }
 
-        private void BtnChange_Click(object sender, RoutedEventArgs e)
+        private async void BtnChange_Click(object sender, RoutedEventArgs e)
         {
+
+            try { 
+            if (lErr_.Visibility == Visibility.Visible)
+                lErr_.Visibility = Visibility.Hidden;
+
+            if (!string.IsNullOrEmpty(addBox1_.Text) && !string.IsNullOrWhiteSpace(addBox1_.Text) &&
+                !string.IsNullOrEmpty(addBox2_.Text) && !string.IsNullOrWhiteSpace(addBox2_.Text) &&
+                !string.IsNullOrEmpty(addBox5_.Text) && !string.IsNullOrWhiteSpace(addBox5_.Text))
+            {
+                SqlCommand command = new SqlCommand("UPDATE [Table] SET [Name]=@Name, [Price]=@Price, [Quantity]=@Quantity WHERE [Name]=N'" + comboMedName.SelectedItem.ToString() + "'", sqlConnection);
+
+                command.Parameters.AddWithValue("Name", addBox1_.Text);
+                command.Parameters.AddWithValue("Price", addBox2_.Text);
+                command.Parameters.AddWithValue("Quantity", addBox5_.Text);
+
+                
+                await command.ExecuteNonQueryAsync();
+                
+                addBox1_.Text = "";
+                addBox2_.Text = "";
+               
+                addBox5_.Text = "";
+                
+               
+            }
+            else
+            {
+                lErr_.Visibility = Visibility.Visible;
+
+                lErr_.Content = "Все поля должны быть заполнены!";
+            }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            comboMedName.SelectedItem = null;
+
+
 
         }
 
-        private void BtnSell_Click(object sender, RoutedEventArgs e)
+        private async void BtnSell_Click(object sender, RoutedEventArgs e)
         {
+            int q = 0;
+            SqlDataReader sqlReader = null;
+            SqlCommand command = new SqlCommand("SELECT [Quantity] FROM [Table] WHERE [Name] LIKE N'" + nameLb.Content.ToString() + "'", sqlConnection);
+
+            try
+            {
+                if (!string.IsNullOrEmpty(sellBox.Text) && !string.IsNullOrWhiteSpace(sellBox.Text))
+                {
+                    sqlReader = await command.ExecuteReaderAsync();
+                    while (await sqlReader.ReadAsync())
+                    {
+                        if(Convert.ToInt32(sellBox.Text)<= Convert.ToInt32(sqlReader["Quantity"]))
+                        {
+                            q = Convert.ToInt32(sqlReader["Quantity"]) - Convert.ToInt32(sellBox.Text);
+                        }
+                        else
+                        {
+                            q = Convert.ToInt32(sqlReader["Quantity"]);
+                            MessageBox.Show("Введенное кол-во продаваемого препарата превышает максимальное кол-во препарата в наличии!", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+
+                    SqlCommand command2 = new SqlCommand("UPDATE [Table] SET [Quantity]=@Quantity WHERE [Name]=N'" + nameLb.Content.ToString() + "'", sqlConnection);
+                    command2.Parameters.AddWithValue("Quantity", q);
+
+                    //qunLb.Content = Convert.ToString(sqlReader["Quantity"]);
+                    if (sqlReader != null)
+                    sqlReader.Close();
+
+                    await command2.ExecuteNonQueryAsync();
+
+                    sellBox.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("Введите кол-во продаваемого препарата!", "Требуется заполнить поле", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+                
+            }
+
+            SqlCommand command3 = new SqlCommand("SELECT * FROM [Table] WHERE [Name] LIKE N'" + findBox.Text + "'", sqlConnection);
+            try
+            {
+                sqlReader = await command.ExecuteReaderAsync();
+
+                while (await sqlReader.ReadAsync())
+                {
+                    qunLb.Content = Convert.ToString(sqlReader["Quantity"]);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+            }
 
         }
 
@@ -111,10 +225,14 @@ namespace Try1
 
                 while (await sqlReader.ReadAsync())
                 {
-                    string s = System.IO.File.ReadAllText(@Convert.ToString(sqlReader["Info"]) + ".txt", Encoding.Default).Replace("\n", " ");
+                    string s = System.IO.File.ReadAllText(Convert.ToString(sqlReader["Info"]) + ".txt", Encoding.Default).Replace("\n", " ");
 
                     textBlock1.Text = s;
-                    textBlock2.Text = "Id: " + Convert.ToString(sqlReader["Id"]) + "\nЦена: " + Convert.ToString(sqlReader["Price"]) + " грн.\nКласс: " + Convert.ToString(sqlReader["Class"]) + "\nПодкласс: " + Convert.ToString(sqlReader["Subclass"]) + "\nКол-во на складе: " + Convert.ToString(sqlReader["Quantity"]);
+                    nameLb.Content = Convert.ToString(sqlReader["Name"]);
+                    priceLb.Content = Convert.ToString(sqlReader["Price"]);
+                    classLb.Content = Convert.ToString(sqlReader["Class"]);
+                    sbLb.Content = Convert.ToString(sqlReader["Subclass"]);
+                    qunLb.Content = Convert.ToString(sqlReader["Quantity"]);
                     //
                 }
             }
@@ -144,6 +262,122 @@ namespace Try1
             addBox5.Text = "";
             addBox6.Text = "";
             addBox7.Text = "";
+
+            addBox1_.Text = "";
+            addBox2_.Text = "";
+            
+        }
+
+        private async void ComboMedName_Loaded(object sender, RoutedEventArgs e)
+        {
+            comboMedName.Items.Clear();
+           
+            SqlDataReader sqlReader = null;
+            SqlCommand command = new SqlCommand("SELECT [Name] FROM [Table]", sqlConnection);
+            try
+            {
+                
+                sqlReader = await command.ExecuteReaderAsync();
+
+                while (await sqlReader.ReadAsync())
+                {
+
+                    comboMedName.Items.Add(Convert.ToString(sqlReader["Name"]));
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+            }
+
+        }
+
+        private async void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            SqlDataReader sqlReader = null;
+            try
+            {
+                SqlCommand command = new SqlCommand("SELECT * FROM [Table] WHERE [Name] LIKE N'" + comboMedName.SelectedItem.ToString() + "'", sqlConnection);
+
+                sqlReader = await command.ExecuteReaderAsync();
+
+                while (await sqlReader.ReadAsync())
+                {
+                    //string s = Convert.ToString(System.IO.File.ReadAllText(Convert.ToString(sqlReader["Info"]) + ".txt", Encoding.Default).Replace("\n", " "));
+
+                    
+                    addBox1_.Text = Convert.ToString(sqlReader["Name"]);
+                    addBox2_.Text = Convert.ToString(sqlReader["Price"]);
+                   
+                    addBox5_.Text = Convert.ToString(sqlReader["Quantity"]);
+
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error); Мне похуй!
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+            }
+             
+        }
+
+        
+
+        private async void ComboDel_Loaded(object sender, RoutedEventArgs e)
+        {
+            comboDel.Items.Clear();
+
+            SqlDataReader sqlReader = null;
+
+            try
+            {
+                SqlCommand command = new SqlCommand("SELECT [Name] FROM [Table]", sqlConnection);
+                sqlReader = await command.ExecuteReaderAsync();
+
+                while (await sqlReader.ReadAsync())
+                {
+
+                    comboDel.Items.Add(Convert.ToString(sqlReader["Name"]));
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+            }
+        }
+
+        private async void BtnDel_Click(object sender, RoutedEventArgs e)
+        {
+            
+
+            SqlCommand command = new SqlCommand("DELETE FROM [Table] WHERE [Name]= @Name", sqlConnection);
+            command.Parameters.AddWithValue("Name", comboDel.SelectedItem.ToString());
+            await command.ExecuteNonQueryAsync();
+            comboDel.SelectedItem = null;
+            //}
+            /*catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }*/
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
         }
 
 
@@ -152,7 +386,7 @@ namespace Try1
             public string Class { get; set; }
             public string Subclass { get; set; }
             public string Name { get; set; }
-            public string Info { get; set; }
+        
         }
 
         private async void TreeView_Loaded(object sender, RoutedEventArgs e)
@@ -187,8 +421,8 @@ namespace Try1
                     {
                         Class = Convert.ToString(sqlReader["Class"]).Trim(),
                         Subclass = Convert.ToString(sqlReader["Subclass"]),
-                        Name = Convert.ToString(sqlReader["Name"]),
-                        Info = Convert.ToString(sqlReader["Info"])
+                        Name = Convert.ToString(sqlReader["Name"])
+                       
                     });
 
 
@@ -236,6 +470,7 @@ namespace Try1
             }
 
         }
+
         private void TreeView_SelectedItemChanged(object sender,
            RoutedPropertyChangedEventArgs<object> e)
         {
@@ -253,11 +488,17 @@ namespace Try1
                 // ... Handle a string.
                 this.Title = "Selected: " + tree.SelectedItem.ToString();
             }
+
+            }
+
+        private void DblClick(object sender, RoutedEventArgs e) { }
+           
+
         }
 
     }
 
-    }
+  
 
     
 
