@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Data;
+using Path = System.IO.Path;
 
 namespace Try1
 {
@@ -24,22 +25,30 @@ namespace Try1
     {
         SqlConnection sqlConnection;
 
+        private class Item
+        {
+            public string Class { get; set; }
+            public string Subclass { get; set; }
+            public string Name { get; set; }
+
+        }
+
+
         public MainWindow()
         {
             InitializeComponent();
         }
-
+        
         private async void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            string dir = Environment.CurrentDirectory.ToString();
             
-            string connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename = D:\Archive\Project\Могилянка\С#\git\-medicine\Try1\Try1\Database1.mdf;Integrated Security=True";
+            string connectionString = string.Format(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={0};Integrated Security=True", Path.GetFullPath("Database1.mdf"));
+
             //string connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; AttachDbFilename \Database1.mdf;Integrated Security=True";
+            //////////////a1789e93be27de4f96ad4055e6d5f6715dd0b3a8
             sqlConnection = new SqlConnection(connectionString);
 
             await sqlConnection.OpenAsync();
-
-            
 
 
         }
@@ -243,6 +252,43 @@ namespace Try1
             }
         }
 
+        private async void Grid_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                SqlDataReader sqlReader = null;
+                //SqlCommand command = new SqlCommand("SELECT * FROM [Table] WHERE Name LIKE "+@findBox.Text.ToString(), sqlConnection);
+                SqlCommand command = new SqlCommand("SELECT * FROM [Table] WHERE [Name] LIKE N'" + findBox.Text + "'", sqlConnection);
+
+                try
+                {
+                    sqlReader = await command.ExecuteReaderAsync();
+
+                    while (await sqlReader.ReadAsync())
+                    {
+                        string s = System.IO.File.ReadAllText(Convert.ToString(sqlReader["Info"]) + ".txt", Encoding.Default).Replace("\n", " ");
+
+                        textBlock1.Text = s;
+                        nameLb.Content = Convert.ToString(sqlReader["Name"]);
+                        priceLb.Content = Convert.ToString(sqlReader["Price"]);
+                        classLb.Content = Convert.ToString(sqlReader["Class"]);
+                        sbLb.Content = Convert.ToString(sqlReader["Subclass"]);
+                        qunLb.Content = Convert.ToString(sqlReader["Quantity"]);
+                        //
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                finally
+                {
+                    if (sqlReader != null)
+                        sqlReader.Close();
+                }
+            }
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             if (sqlConnection != null && sqlConnection.State != ConnectionState.Closed)
@@ -371,6 +417,158 @@ namespace Try1
             }*/
         }
 
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+
         
-    }
+
+        private async void TreeView_Loaded(object sender, RoutedEventArgs e)
+        {
+            tree.Items.Clear();
+
+            string connectionString =
+                   string.Format(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={0};Integrated Security=True",
+                       Path.GetFullPath("Database1.mdf"));
+
+            sqlConnection = new SqlConnection(connectionString);
+
+            await sqlConnection.OpenAsync();
+
+            SqlDataReader sqlReader = null;
+            //SqlCommand command = new SqlCommand("SELECT * FROM [Table] WHERE Name LIKE "+@findBox.Text.ToString(), sqlConnection);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Table]", sqlConnection);
+
+            try
+            {
+                sqlReader = await command.ExecuteReaderAsync();
+
+                var items = new List<Item>();
+
+                while (await sqlReader.ReadAsync())
+                {
+                    /*TreeViewItem item = new TreeViewItem();
+                    
+
+                    item.Header = Convert.ToString(sqlReader["Class"]);
+                    item.ItemsSource = new string[] { Convert.ToString(sqlReader["Subclass"]), Convert.ToString(sqlReader["Name"]) };*/
+
+                    items.Add(new Item
+                    {
+                        Class = Convert.ToString(sqlReader["Class"]).Trim(),
+                        Subclass = Convert.ToString(sqlReader["Subclass"]),
+                        Name = Convert.ToString(sqlReader["Name"])
+                       
+                    });
+
+
+
+
+
+                    /*// ... Get TreeView reference and add both items.
+                        var tree = sender as TreeView;
+
+                        tree.Items.Add(item);
+                        */
+                }
+
+
+
+                foreach (var item in items.GroupBy(x => x.Class))
+                {
+                    var treeViewItem = new TreeViewItem { Header = item.Key };
+                    foreach (var subItem in item.GroupBy(x => x.Subclass))
+                    {
+                        var subclassTreeViewItem = new TreeViewItem
+                        {
+                            Header = subItem.Key,
+                            ItemsSource = subItem.Select(x => x.Name)
+
+                        };
+
+                        treeViewItem.Items.Add(subclassTreeViewItem);
+                    }
+
+                    tree.Items.Add(treeViewItem);
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+            }
+
+        }
+
+        private void TreeView_SelectedItemChanged(object sender,
+           RoutedPropertyChangedEventArgs<object> e)
+        {
+            var tree = sender as TreeView;
+
+            // ... Determine type of SelectedItem.
+            if (tree.SelectedItem is TreeViewItem)
+            {
+                // ... Handle a TreeViewItem.
+                var item = tree.SelectedItem as TreeViewItem;
+                this.Title = "Selected header: " + item.Header.ToString();
+            }
+            else if (tree.SelectedItem is string)
+            {
+                // ... Handle a string.
+                this.Title = "Selected: " + tree.SelectedItem.ToString();
+            }
+
+            }
+
+        private async void DblClick(object sender, RoutedEventArgs e)
+        {
+            SqlDataReader sqlReader = null;
+            //SqlCommand command = new SqlCommand("SELECT * FROM [Table] WHERE Name LIKE "+@findBox.Text.ToString(), sqlConnection);
+            SqlCommand command = new SqlCommand("SELECT * FROM [Table] WHERE [Name] LIKE N'" + tree.SelectedItem.ToString() + "'", sqlConnection);
+
+            try
+            {
+                sqlReader = await command.ExecuteReaderAsync();
+
+                while (await sqlReader.ReadAsync())
+                {
+                    string s = System.IO.File.ReadAllText(Convert.ToString(sqlReader["Info"]) + ".txt", Encoding.Default).Replace("\n", " ");
+
+                    textBlock1.Text = s;
+                    nameLb.Content = Convert.ToString(sqlReader["Name"]);
+                    priceLb.Content = Convert.ToString(sqlReader["Price"]);
+                    classLb.Content = Convert.ToString(sqlReader["Class"]);
+                    sbLb.Content = Convert.ToString(sqlReader["Subclass"]);
+                    qunLb.Content = Convert.ToString(sqlReader["Quantity"]);
+                    //
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message.ToString(), ex.Source.ToString(), MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            finally
+            {
+                if (sqlReader != null)
+                    sqlReader.Close();
+            }
+        }
+           
+
+       }
+
 }
+
+  
+
+    
+
